@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            align-items: center;
+            perspective: 900px;
+        }
+        .s {
+            position: relative;
+            width: 400px;
+            height: 220px;
+            transition: .5s;
+            transform-style: preserve-3d
+        }
+        .s .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+/*            background: green;*/
+            background: repeating-linear-gradient(20deg, green, greenyellow, green, yellowgreen);
+            opacity: .7;
+            transition: 5s;
+            border-bottom-right-radius: 100%;
+            border-top-left-radius: 100%;
+            box-shadow:  0 0 30px 10px green;
+/*            background: repeating-conic-gradient(#000 0 25%, red 25% 50%, #000 50% 75%, red 75% 100%);*/
+            transform: rotateX(calc(var(--i) * 60deg)) translateZ(300px);
+        }
+    </style>
+</head>
+<body>
+    <div class="s">
+        <div class="item" style="--i:1"></div>
+        <div class="item" style="--i:2"></div>
+        <div class="item" style="--i:3"></div>
+        <div class="item" style="--i:4"></div>
+        <div class="item" style="--i:5"></div>
+        <div class="item" style="--i:6"></div>
+    </div>
+    
+    <script>
+        const s = document.querySelector('.s');
+        const item = document.querySelectorAll('.item');
+        
+        let a = 0;
+        document.onmousewheel = (event) => {
+            let l = event.deltaY;
+            a += l / 20;
+            s.style.transform = `rotateX(${a}deg)`;
+        };
+        
+        let b = 0;
+        setInterval(() => {
+            item.forEach(item => {
+             b % 2 == 0 ? item.style.background = 'repeating-linear-gradient(20deg, greenyellow, green, greenyellow, green)' : b % 2 == 1 ? item.style.background = 'repeating-linear-gradient(20deg, green, greenyellow, green, greenyellow)':'';
+             b % 2 == 0 ? item.style.boxShadow = '0 0 30px 15px blue' : b % 2 == 1 ? item.style.boxShadow = '0 0 30px 15px green':'';
+            });
+            b++;
+        },1500);
+        
+    </script>
+</body>
+</html>
